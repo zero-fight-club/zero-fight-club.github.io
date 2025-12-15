@@ -48,13 +48,20 @@ body::before {
 
 /* --- PERFIL --- */
 .avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--accent-color);
+    width: 100%;          /* Ocupa el ancho disponible del contenedor */
+    max-width: 200px;     /* Pero que no pase de 200px para no ser gigante */
+    height: auto;         /* La altura se ajusta sola para no deformar la imagen */
+    /* border-radius: 50%;  <- ESTA LÍNEA SE ELIMINA PARA QUE NO SEA CÍRCULO */
+    border-radius: 15px;  /* (Opcional) Unas esquinas ligeramente redondeadas quedan mejor */
+    
+    /* Aquí mantenemos tu borde rojo */
+    border: 3px solid var(--accent-color); 
+    
     margin-bottom: 1rem;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.3); /* Un poco de resplandor rojo */
+    display: block;       /* Para asegurar que se centra bien */
+    margin-left: auto;    /* Centrado automático */
+    margin-right: auto;   /* Centrado automático */
 }
 
 h1 {
