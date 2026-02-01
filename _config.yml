@@ -1,0 +1,9 @@
+# GitHub Pages Configuration
+strict_front_matter: false
+keep_files:
+  - .nojekyll
+  - data
+  - Files
+exclude:
+  - .git
+  - .gitignore
