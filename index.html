@@ -18,33 +18,185 @@
         </header>
 
         <main class="links-list">
-            
-            <a href="https://www.instagram.com/zero.fight.malaga/" target="_blank" class="link-btn instagram">
-                <i class="fa-brands fa-instagram"></i>
-                <span>Instagram</span>
-            </a>
+            <div class="actions">
+                <a href="https://www.instagram.com/zero.fight.club/" target="_blank" class="link-btn instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
 
-            <a href="https://discord.gg/4yknZKSUHh" target="_blank" class="link-btn discord">
-                <i class="fa-brands fa-discord"></i>
-                <span>Servidor de Discord</span>
-            </a>
+                <a href="https://discord.gg/4yknZKSUHh" target="_blank" class="link-btn discord">
+                    <i class="fa-brands fa-discord"></i>
+                    <span>Servidor de Discord</span>
+                </a>
 
-            <a href="https://github.com/zero-fight-club" target="_blank" class="link-btn github">
-                <i class="fa-brands fa-github"></i>
-                <span>GitHub</span>
-            </a>
+                <a href="https://github.com/zero-fight-club" target="_blank" class="link-btn github">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
+                </a>
 
-            <a href="mailto:zero.fight.malaga@gmail.com" class="link-btn email">
-                <i class="fa-solid fa-envelope"></i>
-                <span>Contactar por Email</span>
-            </a>
+                <a href="mailto:zero.fight.malaga@gmail.com" class="link-btn email">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Contactar por Email</span>
+                </a>
+            </div>
 
-            </main>
+            <nav class="small-nav">
+                <button id="show-calendar" class="nav-btn">Calendario</button>
+                <button id="show-modes" class="nav-btn">Modos de lucha</button>
+                <a href="estatutos.html" class="nav-btn">Estatutos</a>
+            </nav>
+
+            <section id="calendar-section" class="panel hidden">
+                <h2>Calendario de Torneos</h2>
+                <div class="calendar-header">
+                    <button id="prev-month">◀</button>
+                    <div id="month-year"></div>
+                    <button id="next-month">▶</button>
+                </div>
+                <div id="calendar" class="calendar"></div>
+                <div id="events-list" class="events-list"></div>
+            </section>
+
+            <section id="modes-section" class="panel hidden">
+                <h2>Modos de Lucha</h2>
+                <div id="modes-list" class="modes"></div>
+            </section>
+
+        </main>
 
         <footer>
             <p>© 2025 Zero Fight Club Málaga</p>
         </footer>
     </div>
+
+    <script>
+    // --- Carga dinámica de data/events.json y data/modes.json ---
+    let events = [];
+    let modes = [];
+
+    const calendarEl = document.getElementById('calendar');
+    const monthYearEl = document.getElementById('month-year');
+    const eventsListEl = document.getElementById('events-list');
+    let current = new Date();
+
+    async function loadData(){
+        try{
+            const evRes = await fetch('data/events.json');
+            events = await evRes.json();
+        }catch(e){ events = []; }
+        try{
+            const mdRes = await fetch('data/modes.json');
+            const mdObj = await mdRes.json();
+            modes = mdObj.modes || [];
+        }catch(e){ modes = []; }
+        renderModes();
+    }
+
+    function startCalendar(){
+        renderCalendar(current);
+        document.getElementById('prev-month').onclick = () => { current.setMonth(current.getMonth()-1); renderCalendar(current); };
+        document.getElementById('next-month').onclick = () => { current.setMonth(current.getMonth()+1); renderCalendar(current); };
+    }
+
+    function renderCalendar(date){
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        monthYearEl.textContent = date.toLocaleString('es-ES', { month: 'long', year: 'numeric' });
+
+        calendarEl.innerHTML = '';
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month+1, 0).getDate();
+
+        const weekdays = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+        const headerRow = document.createElement('div'); headerRow.className = 'calendar-row header';
+        weekdays.forEach(w => { const d = document.createElement('div'); d.className='calendar-cell header-cell'; d.textContent = w; headerRow.appendChild(d); });
+        calendarEl.appendChild(headerRow);
+
+        let row = document.createElement('div'); row.className='calendar-row';
+        let dayIndex = (firstDay + 6) % 7;
+        for (let i=0;i<dayIndex;i++) { const blank = document.createElement('div'); blank.className='calendar-cell empty'; row.appendChild(blank); }
+
+        for (let d=1; d<=daysInMonth; d++) {
+            if (row.children.length === 7) { calendarEl.appendChild(row); row = document.createElement('div'); row.className='calendar-row'; }
+            const cell = document.createElement('div'); cell.className='calendar-cell day';
+            cell.textContent = d;
+            const iso = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const dayEvents = events.filter(e=>e.date===iso || (e.date && e.date.startsWith(iso)) );
+            if (dayEvents.length) {
+                const dot = document.createElement('span'); dot.className='event-dot'; cell.appendChild(dot);
+                cell.onclick = () => showEvents(iso);
+            }
+            row.appendChild(cell);
+        }
+        calendarEl.appendChild(row);
+        eventsListEl.innerHTML = '';
+    }
+
+    function showEvents(iso){
+        const dayEvents = events.filter(e=>e.date===iso || (e.date && e.date.startsWith(iso)) );
+        if (!dayEvents.length) { eventsListEl.textContent = 'No hay eventos este día.'; return; }
+        eventsListEl.innerHTML = '';
+        dayEvents.forEach(ev=>{
+            const div = document.createElement('div'); div.className='event-item';
+            div.innerHTML = `<strong>${ev.title}</strong><p>${ev.info || ''}</p>`;
+            eventsListEl.appendChild(div);
+        });
+    }
+
+    function renderModes(){
+        const container = document.getElementById('modes-list');
+        container.innerHTML = '';
+        if(!modes || !modes.length){ container.innerHTML = '<p>No hay modos configurados.</p>'; return; }
+        modes.forEach(m=>{
+            const card = document.createElement('div'); card.className = 'mode-card';
+            const rules = (m.rules||[]).map(r=>`<li>${r}</li>`).join('');
+            card.innerHTML = `<h3>${m.name||m.id}</h3><p class="desc">${m.description||''}</p><details><summary>Reglas resumidas</summary><ul>${rules}</ul></details>`;
+            container.appendChild(card);
+        });
+    }
+
+    // UI: show/hide sections
+    document.getElementById('show-calendar').addEventListener('click', ()=>{ document.getElementById('calendar-section').classList.remove('hidden'); document.getElementById('modes-section').classList.add('hidden'); startCalendar(); });
+    document.getElementById('show-modes').addEventListener('click', ()=>{ document.getElementById('modes-section').classList.remove('hidden'); document.getElementById('calendar-section').classList.add('hidden'); renderModes(); });
+
+    // Cargar datos al inicio para que la página siempre muestre la versión actual tras recargar
+    loadData();
+
+    // Polling: revisar cambios en modes.json cada 6 segundos y actualizar si cambia
+    let lastModesPayload = null;
+    async function pollModes(){
+        try{
+            const res = await fetch('data/modes.json', {cache: 'no-store'});
+            if(!res.ok) return;
+            const text = await res.text();
+            if(text !== lastModesPayload){
+                lastModesPayload = text;
+                try{ const obj = JSON.parse(text); modes = obj.modes || []; renderModes(); }
+                catch(e){ console.warn('modes.json JSON inválido', e); }
+            }
+        }catch(e){ /* ignore network errors while polling */ }
+    }
+    setInterval(pollModes, 6000);
+    // Ejecutar una comprobación inmediata para sincronizar
+    pollModes();
+
+    // Polling para events.json (cada 6s) para actualizar calendario automáticamente
+    let lastEventsPayload = null;
+    async function pollEvents(){
+        try{
+            const r = await fetch('data/events.json', {cache: 'no-store'});
+            if(!r.ok) return;
+            const t = await r.text();
+            if(t !== lastEventsPayload){
+                lastEventsPayload = t;
+                try{ events = JSON.parse(t); renderCalendar(current); }
+                catch(e){ console.warn('events.json JSON inválido', e); }
+            }
+        }catch(e){}
+    }
+    setInterval(pollEvents, 6000);
+    pollEvents();
+    </script>
 
 </body>
 </html>

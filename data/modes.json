@@ -1,0 +1,36 @@
+{
+  "modes": [
+    {
+      "id": "duel_1v1",
+      "name": "Seek and Destroy",
+      "description": "Combate clásico cara a cara. El objetivo es la incapacitación total del oponente mediante daño estructural o volteo.",
+      "rules": [
+        "Tiempo límite 3 minutos.",
+        "Si no hay K.O., deciden los jueces (Daño, Agresividad, Control).",
+        "Se permiten todas las armas reglamentadas.",
+        "Doble inspección de seguridad en armas rotativas."
+      ]
+    },
+    {
+      "id": "capture_core",
+      "name": "Capture the Core",
+      "description": "Dos equipos deben empujar un objeto pesado (el \"Core\") hasta la zona de meta del rival mientras se defienden de ataques",
+      "rules": [
+        "Tiempo límite 5 minutos.",
+        "Gana el primer equipo en anotar o el que tenga el Core más cerca de la meta al final.",
+        "Solo se permiten armas de categoría \"Sportsman\" (no destructivas).",
+        "Incapacitación de un robot cuenta como penalización de tiempo."
+      ]
+    },
+    {
+      "id": "king_hill",
+      "name": "King of the Hill",
+      "description": "Un robot debe defender una zona central de la arena. El que más tiempo permanezca en el centro sin ser expulsado o incapacitado gana.",
+      "rules": [
+        "Puntuación por segundos de permanencia en zona marcada.",
+        "Prohibido el uso de pegamentos o anclajes al suelo.",
+        "Victoria por puntos o K.O. del aspirante."
+      ]
+    }
+  ]
+}
