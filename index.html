@@ -14,52 +14,115 @@
         <header class="profile">
             <img src="data/logo.png" alt="Logo Zero Fight" class="avatar">
             <h1>Zero Fight Club</h1>
-            <p>Málaga | Comunidad de Lucha Robotica</p>
+            <p class="tagline">Comunidad de Lucha Robotica</p>
         </header>
 
-        <main class="links-list">
+        <main id="main-content" class="links-list">
             <div class="actions">
-                <a href="https://www.instagram.com/zero.fight.club/" target="_blank" class="link-btn instagram">
+                <a href="https://www.instagram.com/zero.fight.club/" target="_blank" class="link-btn instagram" aria-label="Abrir Instagram en una pestaña nueva">
                     <i class="fa-brands fa-instagram"></i>
                     <span>Instagram</span>
                 </a>
 
-                <a href="https://discord.gg/4yknZKSUHh" target="_blank" class="link-btn discord">
+                <a href="https://discord.gg/4yknZKSUHh" target="_blank" class="link-btn discord" aria-label="Abrir servidor de Discord en una pestaña nueva">
                     <i class="fa-brands fa-discord"></i>
                     <span>Servidor de Discord</span>
                 </a>
 
-                <a href="https://github.com/zero-fight-club" target="_blank" class="link-btn github">
+                <a href="https://github.com/zero-fight-club" target="_blank" class="link-btn github" aria-label="Abrir GitHub en una pestaña nueva">
                     <i class="fa-brands fa-github"></i>
                     <span>GitHub</span>
                 </a>
 
-                <a href="mailto:zero.fight.malaga@gmail.com" class="link-btn email">
+                <a href="mailto:zero.fight.malaga@gmail.com" class="link-btn email" aria-label="Enviar correo electrónico">
                     <i class="fa-solid fa-envelope"></i>
                     <span>Contactar por Email</span>
                 </a>
             </div>
 
-            <nav class="small-nav">
-                <button id="show-calendar" class="nav-btn">Calendario</button>
-                <button id="show-modes" class="nav-btn">Modos de lucha</button>
-                <a href="estatutos.html" class="nav-btn">Estatutos</a>
+            <nav class="small-nav" role="navigation" aria-label="Navegación secundaria">
+                <button id="show-calendar" class="nav-btn" aria-controls="calendar-section" aria-expanded="false" type="button">Calendario</button>
+                <button id="show-modes" class="nav-btn active" aria-controls="modes-section" aria-expanded="true" type="button">Modos de lucha</button>
+                <a href="estatutos.html" class="nav-btn" role="link" aria-label="Ir a estatutos">Estatutos</a>
             </nav>
 
-            <section id="calendar-section" class="panel hidden">
-                <h2>Calendario de Torneos</h2>
+            <section id="calendar-section" class="panel hidden" role="region" aria-labelledby="calendar-heading" aria-hidden="true">
+                <h2 id="calendar-heading" class="sr-only" tabindex="-1">Calendario de Torneos</h2>
                 <div class="calendar-header">
-                    <button id="prev-month">◀</button>
-                    <div id="month-year"></div>
-                    <button id="next-month">▶</button>
+                    <button id="prev-month" aria-label="Mes anterior">◀</button>
+                    <div id="month-year" aria-live="polite"></div>
+                    <button id="next-month" aria-label="Mes siguiente">▶</button>
                 </div>
-                <div id="calendar" class="calendar"></div>
-                <div id="events-list" class="events-list"></div>
+                <div id="calendar" class="calendar" role="grid" aria-label="Calendario"></div>
+                <div id="events-list" class="events-list" role="status" aria-live="polite" aria-atomic="false"></div>
             </section>
 
-            <section id="modes-section" class="panel hidden">
-                <h2>Modos de Lucha</h2>
-                <div id="modes-list" class="modes"></div>
+            <section id="modes-section" class="panel" role="region" aria-labelledby="modes-heading" aria-hidden="false">
+                <h2 id="modes-heading" class="sr-only" tabindex="-1">Modos de Lucha</h2>
+
+                <div class="modes-grid" role="list">
+                    <!-- Card 1 -->
+                    <article class="mode-card" role="listitem">
+                        <div class="mode-card-body">
+                            <h3>Seek and Destroy</h3>
+                            <p class="desc">Combate clásico cara a cara. El objetivo es la incapacitación total del oponente mediante daño estructural o volteo.</p>
+                            <button class="rules-toggle" aria-expanded="false" aria-controls="rules-1">Ver reglas completas</button>
+                            <div id="rules-1" class="rules-panel" hidden>
+                                <ul>
+                                    <li>Tiempo límite 3 minutos.</li>
+                                    <li>Si no hay K.O., deciden los jueces (Daño, Agresividad, Control).</li>
+                                    <li>Se permiten todas las armas reglamentadas.</li>
+                                    <li>Doble inspección de seguridad en armas rotativas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mode-card-footer">
+                            <a class="cta" href="mode.html?mode=seek-and-destroy">Ver página del modo</a>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="mode-card" role="listitem">
+                        <div class="mode-card-body">
+                            <h3>Capture the Core</h3>
+                            <p class="desc">Dos equipos deben empujar un objeto pesado (el "Core") hasta la zona de meta del rival mientras se defienden de ataques.</p>
+                            <button class="rules-toggle" aria-expanded="false" aria-controls="rules-2">Ver reglas completas</button>
+                            <div id="rules-2" class="rules-panel" hidden>
+                                <ul>
+                                    <li>Equipos de 2-4 robots por bando.</li>
+                                    <li>El "Core" debe colocarse dentro de la zona objetivo y permanecer 3 segundos para puntuar.</li>
+                                    <li>Tiempo de partido: 6 minutos.</li>
+                                    <li>Si hay empate, gana el equipo con más 'posesión' del Core (medido por sensores o juez).</li>
+                                    <li>No se permiten proyectiles sueltos que puedan dañar el Core.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mode-card-footer">
+                            <a class="cta" href="mode.html?mode=capture-the-core">Ver página del modo</a>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="mode-card" role="listitem">
+                        <div class="mode-card-body">
+                            <h3>King of the Hill</h3>
+                            <p class="desc">Un robot debe defender una zona central de la arena. El que más tiempo permanezca en el centro sin ser expulsado o incapacitado gana.</p>
+                            <button class="rules-toggle" aria-expanded="false" aria-controls="rules-3">Ver reglas completas</button>
+                            <div id="rules-3" class="rules-panel" hidden>
+                                <ul>
+                                    <li>Ronda de 4 minutos por enfrentamiento.</li>
+                                    <li>Se contabiliza tiempo en la zona central; expulsión fuera del área resta tiempo.</li>
+                                    <li>Si dos robots se alternan en la zona, gana quien acumule más segundos efectivos.</li>
+                                    <li>Si hay disputa sobre el tiempo, decisión final del juez técnico.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mode-card-footer">
+                            <a class="cta" href="mode.html?mode=king-of-the-hill">Ver página del modo</a>
+                        </div>
+                    </article>
+                </div>
+
             </section>
 
         </main>
@@ -79,6 +142,18 @@
     const eventsListEl = document.getElementById('events-list');
     let current = new Date();
 
+    // Mock events para pruebas en el mes actual (días 12 y 24 y uno adicional)
+    const sampleEvents = (function(){
+        const cy = current.getFullYear();
+        const cm = String(current.getMonth()+1).padStart(2,'0');
+        const fmt = d => `${cy}-${cm}-${String(d).padStart(2,'0')}`;
+        return [
+            { date: fmt(12), title: 'Torneo de Apertura: Peso Pesado', time: '18:00h - 21:00h', category: 'Clase Heavyweight', description: 'Combate inaugural con robots pesados. Inspección técnica previa.' },
+            { date: fmt(24), title: 'Antweight Cup', time: '16:00h - 19:00h', category: 'Clase Antweight (150g)', description: 'Eliminatorias rápidas a 3 minutos por enfrentamiento.' },
+            { date: fmt(7), title: 'Exhibición: Robots Autónomos', time: '12:00h - 13:30h', category: 'Demostración', description: 'Demostraciones de navegación autónoma y control remoto.' }
+        ];
+    })();
+
     async function loadData(){
         try{
             const evRes = await fetch('data/events.json');
@@ -89,6 +164,12 @@
             const mdObj = await mdRes.json();
             modes = mdObj.modes || [];
         }catch(e){ modes = []; }
+        // si no hay eventos externos, usar mock para pruebas locales
+        if(!events || !events.length){ events = sampleEvents.slice(); }
+        else {
+            // merge ligero: añadir sampleEvents que no estén duplicados por fecha+title
+            sampleEvents.forEach(s=>{ if(!events.find(e=>e.date===s.date && e.title===s.title)) events.push(s); });
+        }
         renderModes();
     }
 
@@ -102,7 +183,6 @@
         const year = date.getFullYear();
         const month = date.getMonth();
         monthYearEl.textContent = date.toLocaleString('es-ES', { month: 'long', year: 'numeric' });
-
         calendarEl.innerHTML = '';
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month+1, 0).getDate();
@@ -119,17 +199,37 @@
         for (let d=1; d<=daysInMonth; d++) {
             if (row.children.length === 7) { calendarEl.appendChild(row); row = document.createElement('div'); row.className='calendar-row'; }
             const cell = document.createElement('div'); cell.className='calendar-cell day';
-            cell.textContent = d;
+            // número dentro de un span para facilitar estilo circular del día actual
+            const num = document.createElement('span'); num.className = 'num'; num.textContent = d;
+            cell.appendChild(num);
             const iso = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            cell.setAttribute('data-date', iso);
             const dayEvents = events.filter(e=>e.date===iso || (e.date && e.date.startsWith(iso)) );
             if (dayEvents.length) {
-                const dot = document.createElement('span'); dot.className='event-dot'; cell.appendChild(dot);
-                cell.onclick = () => showEvents(iso);
+                // marcar celda como con evento para mostrar el '!' y accesibilidad
+                cell.classList.add('has-event');
+                cell.setAttribute('role','button');
+                cell.tabIndex = 0;
+                cell.onclick = () => openEventModal(iso);
+                cell.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openEventModal(iso); } });
             }
             row.appendChild(cell);
         }
         calendarEl.appendChild(row);
         eventsListEl.innerHTML = '';
+
+        // aplicar marca del día actual en la vista renderizada
+        markCurrentDay();
+    }
+
+    // Añade/actualiza la clase 'current-day' en la celda que corresponde a la fecha de hoy
+    function markCurrentDay(){
+        // limpiar marcas previas
+        document.querySelectorAll('.calendar .day.current-day').forEach(el => el.classList.remove('current-day'));
+        const today = new Date();
+        const iso = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+        const cell = document.querySelector(`.calendar [data-date='${iso}']`);
+        if(cell){ cell.classList.add('current-day'); }
     }
 
     function showEvents(iso){
@@ -143,21 +243,123 @@
         });
     }
 
+    // Modal de eventos
+    function openEventModal(iso){
+        const dayEvents = events.filter(e=>e.date===iso || (e.date && e.date.startsWith(iso)) );
+        if(!dayEvents.length) return;
+        // crear overlay
+        const overlay = document.createElement('div'); overlay.className = 'modal-overlay'; overlay.tabIndex = -1;
+        overlay.addEventListener('click', (ev)=>{ if(ev.target === overlay) closeModal(overlay); });
+
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true');
+        const close = document.createElement('button'); close.className='modal-close'; close.setAttribute('aria-label','Cerrar'); close.innerHTML = '✕';
+        close.onclick = () => closeModal(overlay);
+
+        // si hay varios eventos, mostrar el primero destacado y listado debajo
+        const first = dayEvents[0];
+        const title = document.createElement('div'); title.className='modal-title'; title.textContent = first.title;
+        const meta = document.createElement('div'); meta.className='meta'; meta.textContent = `${first.time || ''} • ${first.category || ''}`;
+        const body = document.createElement('div'); body.className='modal-body';
+        const desc = document.createElement('p'); desc.textContent = first.description || (first.info || '');
+        body.appendChild(desc);
+
+        // lista de otros eventos del día (si existen)
+        if(dayEvents.length > 1){
+            const list = document.createElement('div'); list.style.marginTop = '8px';
+            dayEvents.slice(1).forEach(e=>{
+                const b = document.createElement('div'); b.style.paddingTop='8px'; b.innerHTML = `<strong style="font-weight:700">${e.title}</strong><div style="color:#d8d8d8">${e.time || ''} • ${e.category || ''}</div><p style="margin:6px 0;color:#d0d0d0">${e.description||''}</p>`;
+                list.appendChild(b);
+            });
+            body.appendChild(list);
+        }
+
+        const actions = document.createElement('div'); actions.className='modal-actions';
+        const enroll = document.createElement('button'); enroll.className='btn-primary'; enroll.textContent='Inscribirse';
+        enroll.onclick = ()=>{ window.location.href = '#'; };
+        const bracket = document.createElement('button'); bracket.className='btn-secondary'; bracket.textContent='Ver Bracket';
+        bracket.onclick = ()=>{ window.location.href = '#'; };
+        actions.appendChild(bracket); actions.appendChild(enroll);
+
+        modal.appendChild(close);
+        modal.appendChild(title);
+        modal.appendChild(meta);
+        modal.appendChild(body);
+        modal.appendChild(actions);
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        // focus management
+        close.focus();
+        function onKey(e){ if(e.key === 'Escape') closeModal(overlay); }
+        overlay._onKey = onKey;
+        document.addEventListener('keydown', onKey);
+    }
+
+    function closeModal(overlay){ if(!overlay) return; document.removeEventListener('keydown', overlay._onKey || (()=>{})); overlay.remove(); }
+
     function renderModes(){
         const container = document.getElementById('modes-list');
         container.innerHTML = '';
         if(!modes || !modes.length){ container.innerHTML = '<p>No hay modos configurados.</p>'; return; }
         modes.forEach(m=>{
+            const id = encodeURIComponent(m.id || m.name || m.slug || 'mode');
+            const link = document.createElement('a');
+            link.className = 'mode-link';
+            link.href = `mode.html?mode=${id}`;
+            link.setAttribute('aria-label', `Ver detalles de ${m.name||m.id}`);
+
             const card = document.createElement('div'); card.className = 'mode-card';
             const rules = (m.rules||[]).map(r=>`<li>${r}</li>`).join('');
-            card.innerHTML = `<h3>${m.name||m.id}</h3><p class="desc">${m.description||''}</p><details><summary>Reglas resumidas</summary><ul>${rules}</ul></details>`;
-            container.appendChild(card);
+            card.innerHTML = `<h3>${m.name||m.id}</h3><p class="desc">${m.description||''}</p><details><summary>Reglas resumidas</summary><ul>${rules}</ul></details><p class="more">Ver página del modo →</p>`;
+            link.appendChild(card);
+            container.appendChild(link);
         });
     }
 
-    // UI: show/hide sections
-    document.getElementById('show-calendar').addEventListener('click', ()=>{ document.getElementById('calendar-section').classList.remove('hidden'); document.getElementById('modes-section').classList.add('hidden'); startCalendar(); });
-    document.getElementById('show-modes').addEventListener('click', ()=>{ document.getElementById('modes-section').classList.remove('hidden'); document.getElementById('calendar-section').classList.add('hidden'); renderModes(); });
+    // UI: show/hide sections (actualiza atributos ARIA)
+    function showSection(showId, hideId){
+        const show = document.getElementById(showId);
+        const hide = document.getElementById(hideId);
+        if(show){ show.classList.remove('hidden'); show.setAttribute('aria-hidden','false'); }
+        if(hide){ hide.classList.add('hidden'); hide.setAttribute('aria-hidden','true'); }
+        // actualizar botones aria-expanded
+        const btnCal = document.getElementById('show-calendar');
+        const btnMod = document.getElementById('show-modes');
+        if(btnCal) btnCal.setAttribute('aria-expanded', showId === 'calendar-section');
+        if(btnMod) btnMod.setAttribute('aria-expanded', showId === 'modes-section');
+        // aplicar clase visual 'active' sólo a botones (no al enlace Estatutos)
+        if(btnCal) btnCal.classList.toggle('active', showId === 'calendar-section');
+        if(btnMod) btnMod.classList.toggle('active', showId === 'modes-section');
+        // asegurarnos de que ningún enlace dentro de .small-nav quede marcado
+        const navAnchors = document.querySelectorAll('.small-nav a.nav-btn');
+        navAnchors.forEach(a=> a.classList.remove('active'));
+        // mover foco al encabezado de la sección mostrada para accesibilidad
+        const heading = show && show.querySelector('h2');
+        if(heading) heading.focus();
+    }
+    document.getElementById('show-calendar').addEventListener('click', ()=>{ showSection('calendar-section','modes-section'); startCalendar(); });
+    document.getElementById('show-modes').addEventListener('click', ()=>{ showSection('modes-section','calendar-section'); renderModes(); });
+
+    // Mostrar la sección 'Modos' por defecto y activar botón visual
+    document.addEventListener('DOMContentLoaded', ()=>{
+        showSection('modes-section','calendar-section');
+        const btn = document.getElementById('show-modes');
+        if(btn) btn.classList.add('active');
+
+        // Accordion handlers para reglas
+        document.querySelectorAll('.rules-toggle').forEach(btn=>{
+            btn.addEventListener('click', ()=>{
+                const targetId = btn.getAttribute('aria-controls');
+                const panel = document.getElementById(targetId);
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', String(!expanded));
+                if(panel){
+                    if(expanded){ panel.hidden = true; }
+                    else { panel.hidden = false; }
+                }
+            });
+        });
+    });
 
     // Cargar datos al inicio para que la página siempre muestre la versión actual tras recargar
     loadData();

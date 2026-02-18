@@ -7,50 +7,81 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
     <div class="container">
         <header class="profile">
-            <h1>Estatutos - Zero Fight Club</h1>
+            <h1 tabindex="-1">Estatutos - Zero Fight Club</h1>
             <p>Documento oficial de la competición de Lucha Robótica</p>
         </header>
 
-        <main class="panel">
-            <h2>1. Denominación y Ámbito</h2>
-            <p>La asociación deportiva "Zero Fight Club" (en adelante, "la Organización") regula y organiza competiciones de lucha robótica en Málaga y otras sedes designadas.</p>
+        <main id="main-content" class="panel" role="main">
+            <h2 class="sr-only">Estatutos</h2>
 
-            <h2>2. Fines</h2>
-            <ul>
-                <li>Promover la robótica competitiva y la formación técnica.</li>
-                <li>Organizar torneos seguros y reglamentados.</li>
-                <li>Fomentar la participación estudiantil y comunitaria.</li>
-            </ul>
+            <section class="estatutos-grid" aria-label="Estatutos divididos en tarjetas">
+                <!-- Tarjeta 1: Introducción -->
+                <article class="estatuto-card" role="region" aria-labelledby="e1">
+                    <h3 id="e1" class="estatuto-title">Introducción</h3>
+                    <div class="estatuto-body">
+                        <h4>Artículo 1 — Denominación</h4>
+                        <p>La asociación deportiva "Zero Fight Club" (en adelante, "la Organización") regula y organiza competiciones de lucha robótica en Málaga y otras sedes designadas.</p>
 
-            <h2>3. Organización y Jurisdicción</h2>
-            <p>La Organización nombra un Comité Técnico responsable de la elaboración de reglas, inspecciones y resoluciones en cada evento. Las decisiones del Comité son vinculantes durante las competiciones.</p>
+                        <h4>Artículo 2 — Fines</h4>
+                        <ul>
+                            <li>Promover la robótica competitiva y la formación técnica.</li>
+                            <li>Organizar torneos seguros y reglamentados.</li>
+                            <li>Fomentar la participación estudiantil y comunitaria.</li>
+                        </ul>
+                    </div>
+                </article>
 
-            <h2>4. Categorías y Pesos</h2>
-            <p>Las categorías se dividirán por peso y por tipo de arma/función. Ejemplos: Lightweight (&lt; 3 kg), Middleweight (3-12 kg), Heavyweight (&gt; 12 kg). La Organización puede adaptar las categorías por edición.</p>
+                <!-- Tarjeta 2: Estructura -->
+                <article class="estatuto-card" role="region" aria-labelledby="e2">
+                    <h3 id="e2" class="estatuto-title">Estructura</h3>
+                    <div class="estatuto-body">
+                        <h4>Artículo 3 — Organización y Jurisdicción</h4>
+                        <p>La Organización nombra un Comité Técnico responsable de la elaboración de reglas, inspecciones y resoluciones en cada evento. Las decisiones del Comité son vinculantes durante las competiciones.</p>
 
-            <h2>5. Inscripción</h2>
-            <ul>
-                <li>Los equipos deben inscribirse previamente y proporcionar ficha técnica del robot.</li>
-            </ul>
+                        <h4>Artículo 4 — Categorías y Pesos</h4>
+                        <p>Las categorías se dividirán por peso y por tipo de arma/función. Ejemplos: Lightweight (&lt; 3 kg), Middleweight (3-12 kg), Heavyweight (&gt; 12 kg). La Organización puede adaptar las categorías por edición.</p>
+                    </div>
+                </article>
 
-            <h2>6. Reglas de Combate (resumen)</h2>
-            <ul>
-                <li>Los combates son supervisados por árbitros designados.</li>
-                <li>Duración estándar y sistema de rondas será publicado con antelación.</li>
-                <li>Se prohíben armas que puedan lanzar proyectiles a distancia sin control.</li>
-                <li>Las decisiones de los árbitros sobre ganador, descalificación y seguridad son finales en la jornada, salvo apelación formal.</li>
-            </ul>
+                <!-- Tarjeta 3: Combate y Seguridad -->
+                <article class="estatuto-card" role="region" aria-labelledby="e3">
+                    <h3 id="e3" class="estatuto-title">Combate y Seguridad</h3>
+                    <div class="estatuto-body">
+                        <h4>Artículo 5 — Inscripción</h4>
+                        <ul>
+                            <li>Los equipos deben inscribirse previamente y proporcionar ficha técnica del robot.</li>
+                        </ul>
 
-            <h2>7. Seguridad</h2>
-            <p>Inspección obligatoria antes de cada combate: baterías seguras, interruptor de emergencia accesible, materiales no inflamables. Se podrá denegar participación por riesgo evidente.</p>
+                        <h4>Artículo 6 — Reglas de Combate (resumen)</h4>
+                        <ul>
+                            <li>Los combates son supervisados por árbitros designados.</li>
+                            <li>Duración estándar y sistema de rondas será publicado con antelación.</li>
+                            <li>Se prohíben armas que puedan lanzar proyectiles a distancia sin control.</li>
+                            <li>Las decisiones de los árbitros sobre ganador, descalificación y seguridad son finales en la jornada, salvo apelación formal.</li>
+                        </ul>
 
-            <h2>8. Sanciones</h2>
-            <p>Infracciones técnicas o de conducta pueden llevar a advertencias, pérdida de rondas o descalificación. Reincidencias pueden suponer exclusión temporal o permanente.</p>
+                        <div class="security" aria-labelledby="sec1">
+                            <h4 id="sec1" class="security-title">Artículo 7 — Seguridad</h4>
+                            <p>Inspección obligatoria antes de cada combate: baterías seguras, interruptor de emergencia accesible, materiales no inflamables. Se podrá denegar participación por riesgo evidente.</p>
+                        </div>
+                    </div>
+                </article>
 
-            <h2>9. Protección de Datos</h2>
-            <p>Los datos personales recogidos en inscripciones serán tratados conforme a la normativa vigente y solo para fines del evento.</p>
+                <!-- Tarjeta 4: Legal -->
+                <article class="estatuto-card" role="region" aria-labelledby="e4">
+                    <h3 id="e4" class="estatuto-title">Legal</h3>
+                    <div class="estatuto-body">
+                        <h4>Artículo 8 — Sanciones</h4>
+                        <p>Infracciones técnicas o de conducta pueden llevar a advertencias, pérdida de rondas o descalificación. Reincidencias pueden suponer exclusión temporal o permanente.</p>
+
+                        <h4>Artículo 9 — Protección de Datos</h4>
+                        <p>Los datos personales recogidos en inscripciones serán tratados conforme a la normativa vigente y solo para fines del evento.</p>
+                    </div>
+                </article>
+            </section>
         </main>
 
         <footer>

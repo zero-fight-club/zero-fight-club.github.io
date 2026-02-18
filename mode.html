@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Modo - Zero Fight Club</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="profile">
+      <h1 id="mode-title">Modo</h1>
+      <p id="mode-sub">Detalle del modo</p>
+    </header>
+
+    <main id="main-content" role="main">
+      <nav><a href="index.html" class="nav-btn">← Volver</a></nav>
+      <section id="mode-content" class="panel">
+        <div id="mode-desc"></div>
+        <div id="media-gallery"></div>
+        <section id="robots-section">
+          <h2>Robots participantes anteriormente</h2>
+          <div id="robots-list" class="modes"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Zero Fight Club Málaga</p>
+    </footer>
+  </div>
+
+  <script>
+  function qs(key){ const u = new URL(window.location.href); return u.searchParams.get(key); }
+  const modeKey = qs('mode');
+
+  async function loadMode(){
+    try{
+      const res = await fetch('data/modes.json');
+      const obj = await res.json();
+      const modes = obj.modes || [];
+      const decoded = decodeURIComponent(modeKey||'');
+      const mode = modes.find(m => (m.id||m.name||m.slug||'').toString() === decoded || encodeURIComponent((m.id||m.name||m.slug||'').toString()) === (modeKey||decoded));
+      if(!mode){ document.getElementById('mode-desc').innerHTML = '<p>Modo no encontrado.</p>'; return; }
+      renderMode(mode);
+    }catch(e){ document.getElementById('mode-desc').innerHTML = '<p>Error cargando datos.</p>'; console.error(e); }
+  }
+
+  function renderMode(mode){
+    document.getElementById('mode-title').textContent = mode.name || mode.id || 'Modo';
+    document.getElementById('mode-sub').textContent = mode.short || mode.description || '';
+
+    const desc = document.getElementById('mode-desc');
+    desc.innerHTML = `<p>${(mode.longDescription || mode.description || '')}</p>`;
+
+    const gallery = document.getElementById('media-gallery');
+    gallery.innerHTML = '';
+    // images
+    (mode.images||[]).forEach(src=>{
+      const img = document.createElement('img'); img.src = src; img.alt = mode.name + ' - imagen'; img.style.maxWidth='100%'; img.style.borderRadius='8px'; img.style.marginTop='8px';
+      gallery.appendChild(img);
+    });
+    // videos (youtube links or video src)
+    (mode.videos||[]).forEach(v=>{
+      const wrap = document.createElement('div'); wrap.className='video-wrap'; wrap.style.marginTop='8px';
+      if(typeof v === 'string' && v.includes('youtube.com')|| v.includes('youtu.be')){
+        // embed
+        let id = '';
+        try{ const u=new URL(v); if(u.hostname.includes('youtu')){ if(u.searchParams.get('v')) id = u.searchParams.get('v'); else id = u.pathname.split('/').pop(); } }catch(e){}
+        if(id){ wrap.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" title="Video de ${mode.name}" frameborder="0" allowfullscreen></iframe>`; }
+        else { wrap.innerHTML = `<a href="${v}" target="_blank">Ver video</a>`; }
+      } else {
+        wrap.innerHTML = `<video controls src="${v}" style="max-width:100%;border-radius:8px"></video>`;
+      }
+      gallery.appendChild(wrap);
+    });
+
+    // robots
+    const robotsList = document.getElementById('robots-list');
+    robotsList.innerHTML = '';
+    (mode.robots||[]).forEach(r=>{
+      const card = document.createElement('div'); card.className='mode-card';
+      const img = r.image ? `<img src="${r.image}" alt="${r.name || 'Robot'}" style="max-width:100%;border-radius:6px;margin-bottom:6px">` : '';
+      card.innerHTML = `${img}<h3>${r.name||''}</h3><p class="desc">${r.team||''}</p><p>${r.notes||''}</p>`;
+      robotsList.appendChild(card);
+    });
+  }
+
+  loadMode();
+  </script>
+</body>
+</html>
